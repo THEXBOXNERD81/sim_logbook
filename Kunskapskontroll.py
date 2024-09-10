@@ -2,7 +2,6 @@
 # venv .venv\Scripts\activate
 
 import logging
-import sqlalchemy
 import pandas as pd
 import pytest 
 from DateTime import DateTime
