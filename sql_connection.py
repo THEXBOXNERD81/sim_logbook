@@ -3,7 +3,7 @@ import pytest
 import logging
 import pyodbc
 
-def connection():
+def connection() -> pyodbc.Cursor:
     #Connecting to sql database logbook
     conn = pyodbc.connect(
         Trusted_Connection = 'Yes',
@@ -15,3 +15,17 @@ def connection():
     cursor = conn.cursor()
 
     return cursor
+
+
+def create_table(cursor: pyodbc.Cursor):
+    pass
+
+
+
+def get_table(cursor: pyodbc.Cursor):
+    pass
+
+
+
+def insert_table(cursor: pyodbc.Cursor):
+      pass
