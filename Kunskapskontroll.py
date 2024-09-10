@@ -5,12 +5,12 @@ import logging
 import sqlalchemy
 import pandas as pd
 import pytest 
-import DateTime
+from DateTime import DateTime
 
 # ladda in csv data
 
-# Read the CSV file into a DataFrame and get the wanted columns
 def load_csv(file_name: str) -> pd.DataFrame:
+    # Read the CSV file into a DataFrame and get the wanted columns
     # Needs a try, except
     df = pd.read_csv(file_name)
 
@@ -37,24 +37,49 @@ def load_csv(file_name: str) -> pd.DataFrame:
 df = load_csv('test.csv')
 
 def converting_dtypes(df: pd.DataFrame) -> pd.DataFrame:
+    # Converting the values of the columns into the wanted data types
 
     wanted_convertions = {'Aircraft Name': str, 'Aircraft Type': str, 'Aircraft Registration': str, 
                           'Block Fuel': float, 'Trip Fuel': float, 'Used Fuel': float, 
                           'Gross Weight': float, 'Distance': float,  'Distance Flown': float, 
                           'Departure Ident': str, 'Departure Runway': int, 'Departure Alt': int, 
-                          'Departure Time': DateTime.DateTime, 'Departure Time Sim': DateTime.DateTime, 'Destination Ident': str, 
-                          'Destination Runway': int, 'Destination Alt': int, 'Destination Time': DateTime.DateTime, 
-                          'Destination Time Sim': DateTime.DateTime}
+                          'Departure Time': 'datetime64[ns]', 'Departure Time Sim': 'datetime64[ns]', 'Destination Ident': str, 
+                          'Destination Runway': int, 'Destination Alt': int, 'Destination Time': 'datetime64[ns]', 
+                          'Destination Time Sim': 'datetime64[ns]'}
+    
+
+
+    def convertion(column, type):
+        try:
+            df[column] = df[column].astype(type)
+        except ValueError:
+            print()
+
+    departure_and_destination = ['Departure Time', 'Departure Time Sim', 'Destination Time', 'Destination Time Sim']
+
     for key, value in wanted_convertions.items():
-        print(type(key), value)
-        #try:
-        #    df[key] = df[key].astype(value)
-        #except ValueError:
-        #    print(ValueError(f'cant convert column into {value}'))
+        if key in departure_and_destination:
+            # Spliting the datetime value into the correct format for the data type conversion
+
+            df['date'] = df[key].str.split('T').str[0]
+            df['time'] = df[key].str.split('T').str[1].str.split('.').str[0]
+            df[key] = df['date'] + ' ' + df['time']
+            df = df.drop(['date', 'time'], axis=1)
+
+            convertion(key, value)
+        else:
+            convertion(key, value)
+            
 
     return df
 
+
+
 df = converting_dtypes(df)
+
+
+print(df.head())
+
 
 #print(df.dtypes)    
 # Get needed columns [Aircraft Name: str, Aircraft Type: str, Aircraft Registration: str, Block Fuel: float, Trip Fuel: float, Used Fuel: float, Gross Weight: float, Distance: float,  Distance Flown: float, Departure Ident: str, Departure Runway: int, Departure Alt: int, Departure Time: DateTime, Departure Time Sim: DateTime, Destination Ident: str, Destination Runway: int, Destination Alt: int, Destination Time: DateTime, Destination Time Sim: DateTime]
