@@ -5,7 +5,7 @@ import logging
 import sqlalchemy
 import pandas as pd
 import pytest 
-import DateTime as dt
+import DateTime
 
 # ladda in csv data
 
@@ -42,20 +42,21 @@ def converting_dtypes(df: pd.DataFrame) -> pd.DataFrame:
                           'Block Fuel': float, 'Trip Fuel': float, 'Used Fuel': float, 
                           'Gross Weight': float, 'Distance': float,  'Distance Flown': float, 
                           'Departure Ident': str, 'Departure Runway': int, 'Departure Alt': int, 
-                          'Departure Time': DateTime, 'Departure Time Sim': DateTime, 'Destination Ident': str, 
-                          'Destination Runway': int, 'Destination Alt': int, 'Destination Time': DateTime, 
-                          'Destination Time Sim': DateTime}
-    for key, value in wanted_convertions:
-        try:
-            df[key] = df[key].astype(value)
-        except ValueError:
-            print(ValueError(f'cant convert column into {value}'))
+                          'Departure Time': DateTime.DateTime, 'Departure Time Sim': DateTime.DateTime, 'Destination Ident': str, 
+                          'Destination Runway': int, 'Destination Alt': int, 'Destination Time': DateTime.DateTime, 
+                          'Destination Time Sim': DateTime.DateTime}
+    for key, value in wanted_convertions.items():
+        print(type(key), value)
+        #try:
+        #    df[key] = df[key].astype(value)
+        #except ValueError:
+        #    print(ValueError(f'cant convert column into {value}'))
 
     return df
 
 df = converting_dtypes(df)
 
-print(df.dtypes)    
+#print(df.dtypes)    
 # Get needed columns [Aircraft Name: str, Aircraft Type: str, Aircraft Registration: str, Block Fuel: float, Trip Fuel: float, Used Fuel: float, Gross Weight: float, Distance: float,  Distance Flown: float, Departure Ident: str, Departure Runway: int, Departure Alt: int, Departure Time: DateTime, Departure Time Sim: DateTime, Destination Ident: str, Destination Runway: int, Destination Alt: int, Destination Time: DateTime, Destination Time Sim: DateTime]
 
 
