@@ -3,12 +3,48 @@
 
 import logging
 import sqlalchemy
-import pandas
+import pandas as pd
 import pytest
 
 # ladda in csv data
 
+# Read the CSV file into a DataFrame and get the wanted columns
+def load_csv(file_name: str):
+    df = pd.read_csv(file_name)
 
-# bearbeta vikktiga värden
+    column_names = df.columns.values.tolist()
+
+    wanted_columns = ['Aircraft Name', 'Aircraft Type', 'Aircraft Registration', 
+                    'Block Fuel', 'Trip Fuel', 'Used Fuel', 
+                    'Gross Weight', 'Distance', 'Distance Flown', 
+                    'Departure Ident', 'Departure Runway', 'Departure Alt', 
+                    'Departure Time', 'Departure Time Sim', 'Destination Ident', 
+                    'Destination Runway', 'Destination Alt', 'Destination Time', 
+                    'Destination Time Sim']
+
+    for name in column_names:
+        if name in wanted_columns:
+            pass
+        else:
+            df = df.drop(name, axis=1)
+
+    return df
+
+df = load_csv('test.csv')
+
+
+column_names = df.columns.values.tolist()
+
+for name in column_names:
+    value = df[name][0]
+    print(type(value))
+
+    
+###
+
+# Get needed columns [Aircraft Name: str, Aircraft Type: str, Aircraft Registration: str, Block Fuel: float, Trip Fuel: float, Used Fuel: float, Gross Weight: float, Distance: float,  Distance Flown: float, Departure Ident: str, Departure Runway: int, Departure Alt: int, Departure Time: DateTime, Departure Time Sim: DateTime, Destination Ident: str, Destination Runway: int, Destination Alt: int, Destination Time: DateTime, Destination Time Sim: DateTime]
+
+
+# bearbeta viktiga värden
 
 # Skicka in i SQL
