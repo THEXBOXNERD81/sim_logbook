@@ -9,7 +9,8 @@ import pytest
 # ladda in csv data
 
 # Read the CSV file into a DataFrame and get the wanted columns
-def load_csv(file_name: str):
+def load_csv(file_name: str) -> pd.DataFrame:
+    # Needs a try, except
     df = pd.read_csv(file_name)
 
     column_names = df.columns.values.tolist()
@@ -30,18 +31,30 @@ def load_csv(file_name: str):
 
     return df
 
+
+
 df = load_csv('test.csv')
 
+def converting_dtypes(df: pd.DataFrame) -> pd.DataFrame:
 
-column_names = df.columns.values.tolist()
+    wanted_convertions = {'Aircraft Name': str, 'Aircraft Type': str, 'Aircraft Registration': str, 
+                          'Block Fuel': float, 'Trip Fuel': float, 'Used Fuel': float, 
+                          'Gross Weight': float, 'Distance': float,  'Distance Flown': float, 
+                          'Departure Ident': str, 'Departure Runway': int, 'Departure Alt': int, 
+                          'Departure Time': DateTime, 'Departure Time Sim': DateTime, 'Destination Ident': str, 
+                          'Destination Runway': int, 'Destination Alt': int, 'Destination Time': DateTime, 
+                          'Destination Time Sim': DateTime}
+    for key, value in wanted_convertions:
+        try:
+            df[key] = df[key].astype(value)
+        except ValueError:
+            print(ValueError(f'cant convert column into {value}'))
 
-for name in column_names:
-    value = df[name][0]
-    print(type(value))
+    return df
 
-    
-###
+df = converting_dtypes(df)
 
+print(df.dtypes)    
 # Get needed columns [Aircraft Name: str, Aircraft Type: str, Aircraft Registration: str, Block Fuel: float, Trip Fuel: float, Used Fuel: float, Gross Weight: float, Distance: float,  Distance Flown: float, Departure Ident: str, Departure Runway: int, Departure Alt: int, Departure Time: DateTime, Departure Time Sim: DateTime, Destination Ident: str, Destination Runway: int, Destination Alt: int, Destination Time: DateTime, Destination Time Sim: DateTime]
 
 
