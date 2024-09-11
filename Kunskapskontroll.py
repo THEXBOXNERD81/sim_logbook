@@ -20,18 +20,42 @@ except pyodbc.ProgrammingError:
 
 
 sql_table = sql.get_table(cursor, 'leonardo')
-sql_date_id = sql_table[0][12]
-df_date_id = df['Departure Time'][0]
+try: 
+    sql_date_id = sql_table[0][12]
+    df_date_id = df['Departure Time'][0]
+except:
+    pass
 
-if sql_date_id == df_date_id:
-    print('csv files macth')
-    sql.insert_table(cursor, df, 'leonardo')
+sql_length = len(sql_table)
+df_length = len(df)
 
-elif sql_table == []:
-    sql.insert_table(cursor, df, 'leonardo')
+print(len(sql_table))
+print()
+print(len(df))
+print(len(sql_table[1:5]))
 
-else:
-    raise ReferenceError('The csv logbook does not match the sql table, use the same logbook as used in the sql database')
+
+# Check that the csv file and sql table match so we can make sure that the logbooks are the same
+def logic():
+    
+    if sql_date_id == df_date_id:
+        print('csv files macth')
+        if len(sql_table) == len(df):
+            print('Nothing to update')
+            quit()
+        elif len(sql_table) > len(df):
+            raise print('SQL Table larger than csv. Wrong logbook or duplicate values in SQL database')
+        else:
+            df = df[:][sql_length:df_length]
+            sql.insert_table(cursor, df, 'leonardo')
+            
+
+    elif sql_table == []:
+        sql.insert_table(cursor, df, 'leonardo')
+
+    else:
+        raise ReferenceError('The csv logbook does not match the sql table, use the same logbook as used in the sql database')
+
 
 
 

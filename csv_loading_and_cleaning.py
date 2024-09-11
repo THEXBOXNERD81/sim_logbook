@@ -76,8 +76,6 @@ def converting_dtypes(df: pd.DataFrame) -> pd.DataFrame:
 
 df = converting_dtypes(df)
 
-for row in df.itertuples():
-    print(row)
 
 
     
