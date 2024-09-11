@@ -1,4 +1,3 @@
-import sqlalchemy
 import pytest
 import logging
 import pyodbc
@@ -22,14 +21,14 @@ def connection() -> pyodbc.Cursor:
 def create_table(cursor: pyodbc.Cursor, name: str):
     # Creating a table in the sql database with given name
     cursor.execute(f""" 
-                   CREATE TABLE logbook_{name} (
-                        Aircraft_Name VARCHAR(8000), Aircraft_Type VARCHAR(8000), Aircraft_Registration VARCHAR(8000), 
-                        Block_Fuel FLOAT, Trip_Fuel FLOAT, Used_Fuel FLOAT, 
-                        Gross_Weight FLOAT, Distance FLOAT, Distance_Flown FLOAT,
-                        Departure_Ident VARCHAR(8000), Departure_Runway INT, Departure_Alt INT, 
-                        Departure_Time DATETIME, Departure_Time_Sim DATETIME, Destination_Ident VARCHAR(8000), 
-                        Destination_Runway INT, Destination_Alt INT, Destination_Time DATETIME, Destination_Time_Sim DATETIME
-                    )
+        CREATE TABLE logbook_{name} (
+            Aircraft_Name VARCHAR(8000), Aircraft_Type VARCHAR(8000), Aircraft_Registration VARCHAR(8000), 
+            Block_Fuel FLOAT, Trip_Fuel FLOAT, Used_Fuel FLOAT, 
+            Gross_Weight FLOAT, Distance FLOAT, Distance_Flown FLOAT,
+            Departure_Ident VARCHAR(8000), Departure_Runway INT, Departure_Alt INT, 
+            Departure_Time DATETIME, Departure_Time_Sim DATETIME, Destination_Ident VARCHAR(8000), 
+            Destination_Runway INT, Destination_Alt INT, Destination_Time DATETIME, Destination_Time_Sim DATETIME
+            )
         """)
     
     cursor.commit()
@@ -37,8 +36,14 @@ def create_table(cursor: pyodbc.Cursor, name: str):
 
 
 
-def get_table(cursor: pyodbc.Cursor):
-    pass
+def get_table(cursor: pyodbc.Cursor, name: str):
+    cursor.execute(f"""
+        SELECT * FROM logbook_{name}
+    """)
+
+    sql_table = cursor.fetchall()
+
+    return sql_table
 
 
 
