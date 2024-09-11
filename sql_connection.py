@@ -30,6 +30,8 @@ def create_table(cursor: pyodbc.Cursor, name: str):
                         Destination_Runway INT, Destination_Alt INT, Destination_Time TIMESTAMP, Destination_Time_Sim TIMESTAMP
                     )
         """)
+    
+    return 'Table Created'
 
 
 
@@ -52,6 +54,16 @@ def insert_table(cursor: pyodbc.Cursor, df: pd.DataFrame, name: str):
             )
             VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
-        
+            row.Aircraft_Name, row.Aircraft_Type, row.Aircraft_Registration, 
+            row.Block_Fuel, row.Trip_Fuel, row.Used_Fuel, 
+            row.Gross_Weight, row.Distance, row.Distance_Flown,
+            row.Departure_Ident, row.Departure_Runway, row.Departure_Alt, 
+            row.Departure_Time, row.Departure_Time_Sim, row.Destination_Ident, 
+            row.Destination_Runway, row.Destination_Alt, row.Destination_Time, row.Destination_Time_Sim
         )
+
+        return 'Values inserted into given Table'
+    
+
+
     
