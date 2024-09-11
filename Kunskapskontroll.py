@@ -13,13 +13,15 @@ df = csv.converting_dtypes(df)
 cursor = sql.connection()
 
 # Make a new table for the user else just insert the csv data
+name = 'leonardo'
+
 try:
-    sql.create_table(cursor, 'leonardo')
+    sql.create_table(cursor, name)
 except pyodbc.ProgrammingError:
     print('There is already a table named that in the database.')
 
 
-sql_table = sql.get_table(cursor, 'leonardo')
+sql_table = sql.get_table(cursor, name)
 try: 
     sql_date_id = sql_table[0][12]
     df_date_id = df['Departure Time'][0]
@@ -29,10 +31,6 @@ except:
 sql_length = len(sql_table)
 df_length = len(df)
 
-print(len(sql_table))
-print()
-print(len(df))
-print(len(sql_table[1:5]))
 
 
 # Check that the csv file and sql table match so we can make sure that the logbooks are the same
@@ -47,14 +45,14 @@ def logic():
             raise print('SQL Table larger than csv. Wrong logbook or duplicate values in SQL database')
         else:
             df = df[:][sql_length:df_length]
-            sql.insert_table(cursor, df, 'leonardo')
+            sql.insert_table(cursor, df, name)
             
 
     elif sql_table == []:
-        sql.insert_table(cursor, df, 'leonardo')
+        sql.insert_table(cursor, df, name)
 
     else:
-        raise ReferenceError('The csv logbook does not match the sql table, use the same logbook as used in the sql database')
+        raise FileNotFoundError('The csv logbook does not match the sql table, use the same logbook as used in the sql database')
 
 
 
