@@ -31,10 +31,6 @@ def load_csv(file_name: str) -> pd.DataFrame:
 
     return df
 
-
-
-df = load_csv('test.csv')
-
 def converting_dtypes(df: pd.DataFrame) -> pd.DataFrame:
     # Converting the values of the columns into the wanted data types
 
@@ -68,20 +64,6 @@ def converting_dtypes(df: pd.DataFrame) -> pd.DataFrame:
             convertion(key, value)
         else:
             convertion(key, value)
-            
+
 
     return df
-
-
-
-df = converting_dtypes(df)
-
-
-
-    
-# Get needed columns [Aircraft Name: str, Aircraft Type: str, Aircraft Registration: str, Block Fuel: float, Trip Fuel: float, Used Fuel: float, Gross Weight: float, Distance: float,  Distance Flown: float, Departure Ident: str, Departure Runway: int, Departure Alt: int, Departure Time: DateTime, Departure Time Sim: DateTime, Destination Ident: str, Destination Runway: int, Destination Alt: int, Destination Time: DateTime, Destination Time Sim: DateTime]
-
-
-# bearbeta viktiga värden
-
-# Skicka in i SQL
