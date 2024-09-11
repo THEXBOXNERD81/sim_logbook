@@ -2,6 +2,7 @@ import sqlalchemy
 import pytest
 import logging
 import pyodbc
+import pandas as pd
 
 def connection() -> pyodbc.Cursor:
     #Connecting to sql database logbook
@@ -17,8 +18,18 @@ def connection() -> pyodbc.Cursor:
     return cursor
 
 
-def create_table(cursor: pyodbc.Cursor):
-    pass
+def create_table(cursor: pyodbc.Cursor, name: str):
+    # Creating a table in the sql database with given name
+    cursor.execute(f""" 
+                   CREATE TABLE Logbook.{name} (
+                        Aircraft_Name VARCHAR, Aircraft_Type VARCHAR, Aircraft_Registration VARCHAR, 
+                        Block_Fuel FLOAT, Trip_Fuel FLOAT, Used_Fuel FLOAT, 
+                        Gross_Weight FLOAT, Distance FLOAT, Distance_Flown FLOAT,
+                        Departure_Ident VARCHAR, Departure_Runway INT, Departure_Alt INT, 
+                        Departure_Time TIMESTAMP, Departure_Time_Sim TIMESTAMP, Destination_Ident VARCHAR, 
+                        Destination_Runway INT, Destination_Alt INT, Destination_Time TIMESTAMP, Destination_Time_Sim TIMESTAMP
+                    )
+        """)
 
 
 
@@ -27,5 +38,20 @@ def get_table(cursor: pyodbc.Cursor):
 
 
 
-def insert_table(cursor: pyodbc.Cursor):
-      pass
+def insert_table(cursor: pyodbc.Cursor, df: pd.DataFrame, name: str):
+    # Insertinng the values from the csv file
+    for row in df.itertuples():
+        cursor.execute(f"""
+            INSERT INTO logbook.dbo.logbook.{name} (
+                Aircraft_Name, Aircraft_Type, Aircraft_Registration, 
+                Block_Fuel, Trip_Fuel, Used_Fuel, 
+                Gross_Weight, Distance, Distance_Flown,
+                Departure_Ident, Departure_Runway, Departure_Alt, 
+                Departure_Time, Departure_Time_Sim, Destination_Ident, 
+                Destination_Runway, Destination_Alt, Destination_Time, Destination_Time_Sim
+            )
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        
+        )
+    

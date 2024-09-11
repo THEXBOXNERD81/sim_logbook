@@ -77,7 +77,6 @@ def converting_dtypes(df: pd.DataFrame) -> pd.DataFrame:
 df = converting_dtypes(df)
 
 
-print(df.head())
 
 
 #print(df.dtypes)    
