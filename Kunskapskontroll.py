@@ -7,6 +7,6 @@ df = csv.converting_dtypes(df)
 
 cursor = sql.connection()
 
-sql.create_table(cursor, 'leonardo')
+#sql.create_table(cursor, 'leonardo')
 
 sql.insert_table(cursor, df, 'leonardo')

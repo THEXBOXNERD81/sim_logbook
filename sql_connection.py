@@ -32,6 +32,7 @@ def create_table(cursor: pyodbc.Cursor, name: str):
                     )
         """)
     
+    cursor.commit()
     return print('Table Created')
 
 
@@ -67,7 +68,7 @@ def insert_table(cursor: pyodbc.Cursor, df: pd.DataFrame, name: str):
             row._16, row._17, row._18, 
             row._19
             )
-
+        cursor.commit()
         return print('Values inserted into given Table')
     
 
