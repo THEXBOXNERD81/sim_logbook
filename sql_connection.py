@@ -7,13 +7,14 @@ import pandas as pd
 def connection() -> pyodbc.Cursor:
     #Connecting to sql database logbook
     conn = pyodbc.connect(
-        Trusted_Connection = 'Yes',
-        Driver = {'ODBC Driver 17 for SQL Server'},
-        Server = 'DESKTOP-ONKVLR4',
-        database = 'logbook'
+        'DRIVER={ODBC Driver 17 for SQL Server};'
+        'SERVER=DESKTOP-ONKVLR4;'
+        'DATABASE=logbook;'
+        'Trusted_Connection=yes;'
     )
 
     cursor = conn.cursor()
+    print('connected to server')
 
     return cursor
 
@@ -21,17 +22,17 @@ def connection() -> pyodbc.Cursor:
 def create_table(cursor: pyodbc.Cursor, name: str):
     # Creating a table in the sql database with given name
     cursor.execute(f""" 
-                   CREATE TABLE Logbook.{name} (
-                        Aircraft_Name VARCHAR, Aircraft_Type VARCHAR, Aircraft_Registration VARCHAR, 
+                   CREATE TABLE logbook_{name} (
+                        Aircraft_Name VARCHAR(8000), Aircraft_Type VARCHAR(8000), Aircraft_Registration VARCHAR(8000), 
                         Block_Fuel FLOAT, Trip_Fuel FLOAT, Used_Fuel FLOAT, 
                         Gross_Weight FLOAT, Distance FLOAT, Distance_Flown FLOAT,
-                        Departure_Ident VARCHAR, Departure_Runway INT, Departure_Alt INT, 
-                        Departure_Time TIMESTAMP, Departure_Time_Sim TIMESTAMP, Destination_Ident VARCHAR, 
-                        Destination_Runway INT, Destination_Alt INT, Destination_Time TIMESTAMP, Destination_Time_Sim TIMESTAMP
+                        Departure_Ident VARCHAR(8000), Departure_Runway INT, Departure_Alt INT, 
+                        Departure_Time DATETIME, Departure_Time_Sim DATETIME, Destination_Ident VARCHAR(8000), 
+                        Destination_Runway INT, Destination_Alt INT, Destination_Time DATETIME, Destination_Time_Sim DATETIME
                     )
         """)
     
-    return 'Table Created'
+    return print('Table Created')
 
 
 
@@ -44,7 +45,7 @@ def insert_table(cursor: pyodbc.Cursor, df: pd.DataFrame, name: str):
     # Insertinng the values from the csv file
     for row in df.itertuples():
         cursor.execute(f"""
-            INSERT INTO logbook.dbo.logbook.{name} (
+            INSERT INTO logbook.dbo.logbook_{name} (
                 Aircraft_Name, Aircraft_Type, Aircraft_Registration, 
                 Block_Fuel, Trip_Fuel, Used_Fuel, 
                 Gross_Weight, Distance, Distance_Flown,
@@ -54,15 +55,20 @@ def insert_table(cursor: pyodbc.Cursor, df: pd.DataFrame, name: str):
             )
             VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
-            row.Aircraft_Name, row.Aircraft_Type, row.Aircraft_Registration, 
-            row.Block_Fuel, row.Trip_Fuel, row.Used_Fuel, 
-            row.Gross_Weight, row.Distance, row.Distance_Flown,
-            row.Departure_Ident, row.Departure_Runway, row.Departure_Alt, 
-            row.Departure_Time, row.Departure_Time_Sim, row.Destination_Ident, 
-            row.Destination_Runway, row.Destination_Alt, row.Destination_Time, row.Destination_Time_Sim
-        )
 
-        return 'Values inserted into given Table'
+            # row._n is replacing the column names with spaces in them. this happens when using df.itertuples()
+            # row._1 == row.Aircraft_name and so on
+        
+            row._1, row._2, row._3, 
+            row._4, row._5, row._6, 
+            row._7, row.Distance, row._9,
+            row._10, row._11, row._12, 
+            row._13, row._14, row._15, 
+            row._16, row._17, row._18, 
+            row._19
+            )
+
+        return print('Values inserted into given Table')
     
 
 

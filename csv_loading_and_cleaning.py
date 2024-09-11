@@ -76,10 +76,11 @@ def converting_dtypes(df: pd.DataFrame) -> pd.DataFrame:
 
 df = converting_dtypes(df)
 
+for row in df.itertuples():
+    print(row)
 
 
-
-#print(df.dtypes)    
+    
 # Get needed columns [Aircraft Name: str, Aircraft Type: str, Aircraft Registration: str, Block Fuel: float, Trip Fuel: float, Used Fuel: float, Gross Weight: float, Distance: float,  Distance Flown: float, Departure Ident: str, Departure Runway: int, Departure Alt: int, Departure Time: DateTime, Departure Time Sim: DateTime, Destination Ident: str, Destination Runway: int, Destination Alt: int, Destination Time: DateTime, Destination Time Sim: DateTime]
 
 
