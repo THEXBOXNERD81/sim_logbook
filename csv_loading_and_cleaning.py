@@ -4,13 +4,11 @@
 import logging
 import pandas as pd
 import pytest 
-from DateTime import DateTime
 
 # ladda in csv data
 
 def load_csv(file_name: str) -> pd.DataFrame:
     # Read the CSV file into a DataFrame and get the wanted columns
-    # Needs a try, except
     df = pd.read_csv(file_name)
 
     column_names = df.columns.values.tolist()
@@ -47,8 +45,8 @@ def converting_dtypes(df: pd.DataFrame) -> pd.DataFrame:
     def convertion(column, type):
         try:
             df[column] = df[column].astype(type)
-        except ValueError:
-            print()
+        except TypeError:
+            print(f'Couldnt convert to {df[column]} to {type}')
 
     departure_and_destination = ['Departure Time', 'Departure Time Sim', 'Destination Time', 'Destination Time Sim']
 

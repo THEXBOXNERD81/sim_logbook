@@ -37,6 +37,7 @@ def create_table(cursor: pyodbc.Cursor, name: str):
 
 
 def get_table(cursor: pyodbc.Cursor, name: str):
+    # A function that fetches the table of the logbook 
     cursor.execute(f"""
         SELECT * FROM logbook_{name}
     """)
@@ -73,8 +74,8 @@ def insert_table(cursor: pyodbc.Cursor, df: pd.DataFrame, name: str):
             row._16, row._17, row._18, 
             row._19
             )
-        cursor.commit()
-        return print('Values inserted into given Table')
+    cursor.commit()
+    return print('Values inserted into given Table')
     
 
 
