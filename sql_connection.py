@@ -1,9 +1,9 @@
-import pytest
 import logging
 import pyodbc
 import pandas as pd
 
 def connection() -> pyodbc.Cursor:
+    """A function that makes a connection to the SQL Database logbook."""
     #Connecting to sql database logbook
     conn = pyodbc.connect(
         'DRIVER={ODBC Driver 17 for SQL Server};'
@@ -19,6 +19,7 @@ def connection() -> pyodbc.Cursor:
 
 
 def create_table(cursor: pyodbc.Cursor, name: str):
+    """A function that creates a SQL table for the logbook database with a name attached to it"""
     # Creating a table in the sql database with given name
     cursor.execute(f""" 
         CREATE TABLE logbook_{name} (
@@ -37,6 +38,7 @@ def create_table(cursor: pyodbc.Cursor, name: str):
 
 
 def get_table(cursor: pyodbc.Cursor, name: str):
+    """A function that retrives the SQL table with all of the rows and columns"""
     # A function that fetches the table of the logbook 
     cursor.execute(f"""
         SELECT * FROM logbook_{name}
@@ -49,6 +51,7 @@ def get_table(cursor: pyodbc.Cursor, name: str):
 
 
 def insert_table(cursor: pyodbc.Cursor, df: pd.DataFrame, name: str):
+    """A function that inserts the dataframe values into the SQL database"""
     # Insertinng the values from the csv file
     for row in df.itertuples():
         cursor.execute(f"""
@@ -62,12 +65,9 @@ def insert_table(cursor: pyodbc.Cursor, df: pd.DataFrame, name: str):
             )
             VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
-
-            # row._n is replacing the column names with spaces in them. this happens when using df.itertuples()
-            # row._1 == row.Aircraft_name and so on
         
-            row._1, row._2, row._3, 
-            row._4, row._5, row._6, 
+            row._1, row._2, row._3,             # row._n is replacing the column names with spaces in them
+            row._4, row._5, row._6,             # row._1 == row.Aircraft_name and so on
             row._7, row.Distance, row._9,
             row._10, row._11, row._12, 
             row._13, row._14, row._15, 

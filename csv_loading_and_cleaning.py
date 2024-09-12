@@ -3,15 +3,16 @@
 
 import logging
 import pandas as pd
-import pytest 
 
 # ladda in csv data
 
 def load_csv(file_name: str) -> pd.DataFrame:
-    # Read the CSV file into a DataFrame and get the wanted columns
-    df = pd.read_csv(file_name)
+    """
+    A function that loads a given logbook csv file and returns a dataframe
+    with wanted columns for a logbook.
+    """
 
-    column_names = df.columns.values.tolist()
+    df = pd.read_csv(file_name)
 
     wanted_columns = ['Aircraft Name', 'Aircraft Type', 'Aircraft Registration', 
                     'Block Fuel', 'Trip Fuel', 'Used Fuel', 
@@ -20,6 +21,8 @@ def load_csv(file_name: str) -> pd.DataFrame:
                     'Departure Time', 'Departure Time Sim', 'Destination Ident', 
                     'Destination Runway', 'Destination Alt', 'Destination Time', 
                     'Destination Time Sim']
+
+    column_names = df.columns.values.tolist()
 
     for name in column_names:
         if name in wanted_columns:
@@ -30,6 +33,10 @@ def load_csv(file_name: str) -> pd.DataFrame:
     return df
 
 def converting_dtypes(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    A function that converts data types from the logbook Dataframe
+    into needed data types for the SQL table.
+    """
     # Converting the values of the columns into the wanted data types
 
     wanted_convertions = {'Aircraft Name': str, 'Aircraft Type': str, 'Aircraft Registration': str, 
@@ -43,9 +50,14 @@ def converting_dtypes(df: pd.DataFrame) -> pd.DataFrame:
 
 
     def convertion(column, type):
+        """ 
+        A function that converts the datatype from
+        the given column into the given datatype.
+        """
         try:
             df[column] = df[column].astype(type)
         except TypeError:
+            #log Critical
             print(f'Couldnt convert to {df[column]} to {type}')
 
     departure_and_destination = ['Departure Time', 'Departure Time Sim', 'Destination Time', 'Destination Time Sim']
