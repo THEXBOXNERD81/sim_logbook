@@ -5,7 +5,29 @@ import csv_loading_and_cleaning as csv
 
 # Check that the csv file and sql table match so we can make sure that the logbooks are the same
 def logbook(sql_table: list, df: pandas.DataFrame, cursor: pyodbc.Cursor, name: str):
-    """A function that checks if the right logbook is given and updates the logbook with the new entries"""
+    """
+    Checks if the provided logbook matches the SQL table and updates the logbook with new entries.
+
+    Parameters:
+    sql_table (list): The SQL table data as a list of rows.
+    df (pandas.DataFrame): The DataFrame containing the new logbook entries.
+    cursor (pyodbc.Cursor): The database cursor for executing SQL commands.
+    name (str): The name of the SQL table to update.
+
+    Raises:
+    FileNotFoundError: If the CSV logbook does not match the SQL table.
+    Exception: If the SQL table is larger than the CSV file, indicating an old CSV file or duplicate values in the SQL database.
+
+    Notes:
+    - The function first checks if the logbook IDs match between the SQL table and the DataFrame.
+    - If the IDs match and the lengths are equal, it exits without updating.
+    - If the SQL table is larger, it raises an exception.
+    - If the DataFrame is larger, it updates the SQL table with the new entries.
+    - If the SQL table is empty, it inserts all entries from the DataFrame.
+
+    Example:
+    logbook(sql_table, df, cursor, 'logbook_name')
+    """
     try: 
         #this is done to get a form of id to make sure that the same logbooks are being used
         #If there is no values in the table, then there shouldn't be an error occuring
@@ -39,7 +61,7 @@ def logbook(sql_table: list, df: pandas.DataFrame, cursor: pyodbc.Cursor, name: 
 
 # Load logbook csv and convert the datatypes to integrate into the SQL Database
 #T:E: log INFO, critical
-df = csv.load_csv('Test3.csv')
+df = csv.load_logbook('Test3.csv')
 
 # T:E log INFO, Critical
 df = csv.converting_dtypes(df)
