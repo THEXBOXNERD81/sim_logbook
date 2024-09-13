@@ -84,21 +84,23 @@ def logbook(sql_table: list, df: pandas.DataFrame, cursor: pyodbc.Cursor, name: 
 try:
     df = csv.load_logbook('Test3.csv')
     logger.info('Requested file succesfully loaded')
-except FileNotFoundError:
-    logger.error('The wanted file could be loaded')
-    logger.info('Program is shutting down')
+except FileNotFoundError as e:
+    logger.critical('The wanted file could not be loaded')
+    logger.debug(e)
     quit()
-except PermissionError:
-    pass
+except PermissionError as e:
+    logger.critical('Could not get acces to the wanted file')
+    logger.debug(e)
+    quit()
 
 
 # T:E log INFO, Critical
 try:
     df = csv.converting_dtypes(df)
     logger.info('Values converted to correct data types')
-except TypeError:
-    logger.error("Couldn't convert the values into the wanted datatypes")
-    logger.info('Program is shutting down')
+except TypeError as e:
+    logger.critical("Couldn't convert the values into the wanted datatypes")
+    logger.debug(e)
     quit()
 
 # Make the connection to the SQL Server
@@ -106,9 +108,13 @@ except TypeError:
 try:
     cursor = sql.connection()
     logger.info('Connection to server was made')
-except:
-    logger.error("Connection couldn't be made to the server")
-    logger.info('Program is shutting down')
+except pyodbc.OperationalError as e:
+    logger.critical("Connection couldn't be made to the server")
+    logger.debug(e)
+    quit()
+except pyodbc.InterfaceError as e:
+    logger.critical("Connection couldn't be made to the server")
+    logger.debug(e)
     quit()
 
 # Make a new table for the user else just insert the csv data
