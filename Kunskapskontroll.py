@@ -87,6 +87,9 @@ except FileNotFoundError:
     logger.error('The wanted file could be loaded')
     logger.info('Program is shutting down')
     quit()
+except PermissionError:
+    pass
+
 
 # T:E log INFO, Critical
 try:
