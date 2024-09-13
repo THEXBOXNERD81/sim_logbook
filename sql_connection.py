@@ -32,7 +32,6 @@ def connection() -> pyodbc.Cursor:
     )
 
     cursor = conn.cursor()
-    print('connected to server')
 
     return cursor
 
