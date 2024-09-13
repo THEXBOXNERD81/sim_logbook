@@ -58,25 +58,26 @@ def logbook(sql_table: list, df: pandas.DataFrame, cursor: pyodbc.Cursor, name: 
         logger.info('csv files macth')
         if len(sql_table) == len(df):
             logger.info('Nothing to update')
-            quit()
+            #quit()
         elif len(sql_table) > len(df):
-            raise logger.warning('SQL Table larger than csv. Old csv file used or duplicate values in SQL database')
+            logger.warning('SQL Table larger than csv. Old csv file used or duplicate values in SQL database')
+            raise Exception
         else:
             df = df[:][sql_length:df_length]
             sql.insert_table(cursor, df, name)
             logger.info(f'Values where succefully insert into logbook_{name}')
             logger.info('Program is shutting down')
-            quit()
+            #quit()
             
     elif sql_table == []:
         df = df[:][sql_length:df_length]
         sql.insert_table(cursor, df, name)
         logger.info(f'Values where succefully insert into logbook_{name}')
         logger.info('Program is shutting down')
-        quit()
+        #quit()
 
     else:
-        raise FileNotFoundError('The csv logbook does not match the sql table, use the same logbook as used in the sql database')
+        raise ReferenceError('The csv logbook does not match the sql table, use the same logbook as used in the sql database')
 
 # Load logbook csv and convert the datatypes to integrate into the SQL Database
 #T:E: log INFO, critical

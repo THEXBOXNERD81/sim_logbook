@@ -89,7 +89,6 @@ def create_table(cursor: pyodbc.Cursor, name: str) -> None:
         """)
     
     cursor.commit()
-    return print('Table Created')
 
 
 
@@ -163,7 +162,6 @@ def insert_table(cursor: pyodbc.Cursor, df: pd.DataFrame, name: str) -> None:
             row._19
             )
     cursor.commit()
-    return print('Values inserted into given Table')
     
 
 
