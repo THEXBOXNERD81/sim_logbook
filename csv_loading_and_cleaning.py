@@ -124,7 +124,6 @@ def converting_dtypes(df: pd.DataFrame) -> pd.DataFrame:
         try:
             df[column] = df[column].astype(type)
         except TypeError:
-            #log Critical
             print(f'Couldnt convert to {df[column]} to {type}')
 
     departure_and_destination = ['Departure Time', 'Departure Time Sim', 'Destination Time', 'Destination Time Sim']
