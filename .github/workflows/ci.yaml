@@ -5,7 +5,7 @@ on:
   pull-request:
 
 jobs:
-  run_tests:
+  run-tests:
     strategy:
       fail-test: false
       matrix: 
