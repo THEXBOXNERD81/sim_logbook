@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 from unittest.mock import MagicMock
 
-import csv_loading_and_cleaning as csv
+from modules import csv_loading_and_cleaning as csv
 import logbook as log
 
 

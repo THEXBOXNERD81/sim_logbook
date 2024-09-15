@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 
-import csv_loading_and_cleaning as csv
+from modules import csv_loading_and_cleaning as csv
 
 @pytest.fixture
 def testing_df():
