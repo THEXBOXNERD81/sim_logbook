@@ -2,8 +2,8 @@ import pyodbc
 import pandas
 import logging
 
-import sql_connection as sql
-import csv_loading_and_cleaning as csv
+from modules import sql_connection as sql
+from modules import csv_loading_and_cleaning as csv
 
 
 
