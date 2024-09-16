@@ -48,6 +48,7 @@ def logbook(sql_table: list, df: pandas.DataFrame, cursor: pyodbc.Cursor, name: 
         sql_date_id = sql_table[0][12]
         df_date_id = df['Departure Time'][0]
     except:
+        # This is done to avoid an Exception in the later stages when we need a missmatching id
         sql_date_id = 1
         df_date_id = 0
 

@@ -6,14 +6,16 @@ from modules import csv_loading_and_cleaning as csv
 
 
 @pytest.fixture
+# A cursor is made to avoid redundancy
 def testing_cursor():
     cursor = sql.connection()
     return cursor
 
 def test_no_connection_trusted():
+    # This test checkes that it raises a pyodbc.OperationalError when a typo is made in one of the values is made
     # Inline comment show what error message when values are wrong
     with pytest.raises(pyodbc.OperationalError):
-        #wrong value in Trusted_connection
+        #Wrong value in Trusted_connection
         conn = pyodbc.connect(
             'DRIVER={ODBC Driver 17 for SQL Server};' #pyodbc.InterfaceError
             'SERVER=DESKTOP-ONKVLR4;' #pyodbc.OperationalError
@@ -22,6 +24,7 @@ def test_no_connection_trusted():
         )
 
 def test_no_connection_driver():
+    # This test checkes that it raises a pyodbc.OperationalError when a typo is made in one of the values is made
     # Inline comment show what error message when values are wrong
     with pytest.raises(pyodbc.InterfaceError):
         # wrong value in driver
@@ -33,9 +36,11 @@ def test_no_connection_driver():
         )
 
 def test_connection(testing_cursor):
+    # Test to check that a connection is made by returning the correct datatype
     assert isinstance(testing_cursor, pyodbc.Cursor)
 
 def test_create_table(testing_cursor):
+    # Test that checks if a table was created by retrieving the table and checking that the table is empty  
     table_name = 'test'
     sql.create_table(testing_cursor, table_name)
     table = sql.get_table(testing_cursor, table_name)
@@ -43,15 +48,18 @@ def test_create_table(testing_cursor):
     
 
 def test_get_table(testing_cursor):
+    # Test that a table can be retrived by checking that the table is a list
     table = sql.get_table(testing_cursor, 'test')
     assert isinstance(table, list)
 
 def test_wrong_table(testing_cursor):
+    # test that checks for pyodbc.ProgrammingError by searching for a non existing table
     with pytest.raises(pyodbc.ProgrammingError):
         table = sql.get_table(testing_cursor, 'wrong table')
 
 
 def test_insert_table(testing_cursor):
+    # Test that tries to insert a dataframe into a sql table and checking if the table is not 0 and that it is a list
     df = csv.load_logbook('csv_files/Test3.csv')
     df = csv.converting_dtypes(df)
     sql.insert_table(testing_cursor, df, 'test')
@@ -59,6 +67,8 @@ def test_insert_table(testing_cursor):
 
     assert len(table) != 0
     assert isinstance(table, list) 
+
+    #this is done to remove the test table for future tests
     testing_cursor.execute("""DROP TABLE logbook_test""")
     testing_cursor.commit()
 
