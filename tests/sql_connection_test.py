@@ -47,7 +47,7 @@ def test_get_table(testing_cursor):
     assert isinstance(table, list)
 
 def test_insert_table(testing_cursor):
-    df = csv.load_logbook('Test3.csv')
+    df = csv.load_logbook('csv_files/Test3.csv')
     df = csv.converting_dtypes(df)
     sql.insert_table(testing_cursor, df, 'test')
     table = sql.get_table(testing_cursor, 'test')
