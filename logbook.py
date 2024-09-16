@@ -58,7 +58,7 @@ def logbook(sql_table: list, df: pandas.DataFrame, cursor: pyodbc.Cursor, name: 
         logger.info('csv files macth')
         if len(sql_table) == len(df):
             logger.info('Nothing to update')
-            #quit()
+            return
         elif len(sql_table) > len(df):
             logger.warning('SQL Table larger than csv. Old csv file used or duplicate values in SQL database')
             raise Exception
@@ -67,22 +67,21 @@ def logbook(sql_table: list, df: pandas.DataFrame, cursor: pyodbc.Cursor, name: 
             sql.insert_table(cursor, df, name)
             logger.info(f'Values where succefully insert into logbook_{name}')
             logger.info('Program is shutting down')
-            #quit()
+            return
             
     elif sql_table == []:
         df = df[:][sql_length:df_length]
         sql.insert_table(cursor, df, name)
         logger.info(f'Values where succefully insert into logbook_{name}')
         logger.info('Program is shutting down')
-        #quit()
+        return
 
     else:
         raise ReferenceError('The csv logbook does not match the sql table, use the same logbook as used in the sql database')
 
 # Load logbook csv and convert the datatypes to integrate into the SQL Database
-#T:E: log INFO, critical
 try:
-    df = csv.load_logbook('Test3.csv')
+    df = csv.load_logbook('csv_files/Test3.csv')
     logger.info('Requested file succesfully loaded')
 except FileNotFoundError as e:
     logger.critical('The wanted file could not be loaded')
@@ -93,8 +92,6 @@ except PermissionError as e:
     logger.debug(e)
     quit()
 
-
-# T:E log INFO, Critical
 try:
     df = csv.converting_dtypes(df)
     logger.info('Values converted to correct data types')
@@ -104,7 +101,6 @@ except TypeError as e:
     quit()
 
 # Make the connection to the SQL Server
-#T:E INFO, Critical
 try:
     cursor = sql.connection()
     logger.info('Connection to server was made')
@@ -127,16 +123,15 @@ try:
 except pyodbc.ProgrammingError:
     logger.info(f'There is already a table for {name} in the database.')
 
+# Retrieve the SQL table for the given name
 try:
     sql_table = sql.get_table(cursor, name)
     logger.info(f'SQL table retrieved from logbook_{name}')
-except:
-    logger.error(f"Couldn't retrieve SQL table for logbook_{name}")
-    logger.info('Program is shutting down')
+except pyodbc.ProgrammingError as e:
+    logger.critical(f"Couldn't retrieve SQL table for logbook_{name}")
+    logger.debug(e)
     quit()
 
-try:
-    logbook(sql_table, df, cursor, name)
-except:
-    pass
 
+
+logbook(sql_table, df, cursor, name)

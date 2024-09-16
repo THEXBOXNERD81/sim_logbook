@@ -46,6 +46,11 @@ def test_get_table(testing_cursor):
     table = sql.get_table(testing_cursor, 'test')
     assert isinstance(table, list)
 
+def test_wrong_table(testing_cursor):
+    with pytest.raises(pyodbc.ProgrammingError):
+        table = sql.get_table(testing_cursor, 'wrong table')
+
+
 def test_insert_table(testing_cursor):
     df = csv.load_logbook('csv_files/Test3.csv')
     df = csv.converting_dtypes(df)

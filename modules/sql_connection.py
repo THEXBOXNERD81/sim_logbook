@@ -36,6 +36,7 @@ def connection() -> pyodbc.Cursor:
     return cursor
 
 
+
 def create_table(cursor: pyodbc.Cursor, name: str) -> None:
     """
     Creates a SQL table for the logbook database with the specified name.
