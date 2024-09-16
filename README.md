@@ -37,21 +37,22 @@ conn = pyodbc.connect(
 ```
 Update DRIVER, SERVER, and DATABASE to match your SQL server configuration.
 
-``` file_name = 'C:/your_directory/your_file.csv'
+``` 
+file_name = 'C:/your_directory/your_file.csv'
 name = 'Your_Logbook_Name'
 logbook(sql_table, df, cursor, name, file_name)
 ```
 Ensure file_name and name are updated to fit your setup. The function accepts these arguments directly as values:
-`logbook(sql_table, df, cursor, 'Your_Logbook_Name', 'C:/your_directory/your_file.csv')
+`logbook(sql_table, df, cursor, 'Your_Logbook_Name', 'C:/your_directory/your_file.csv')`
 
 the other function arguments should no be changed or left out.
 
 Finally, run: 
-`python logbook.py
+`python logbook.py`
 to import the logbook into your SQL table.
 
-## Contributing
+## Contribution
 Contributions does not need to be made since i wont be improving or updating the project.
 
 ## Acknowledgements
-Id like to thank Tishan Nehru for helping me look for typing errors.
+I'd like to thank Tishan Nehru for helping me look for typing errors.
