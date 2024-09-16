@@ -11,7 +11,7 @@ link to Little navmap: https://albar965.github.io/
 ## Table of Contents
 - Installation
 - Usage
-- Contributing
+- Contribution
 - Contact
 - Acknowledgements
 

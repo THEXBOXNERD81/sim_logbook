@@ -1,9 +1,4 @@
-# venv Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
-# venv .venv\Scripts\activate
-
 import pandas as pd
-
-# ladda in csv data
 
 def load_logbook(file_name: str) -> pd.DataFrame:
     """
