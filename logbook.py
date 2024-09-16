@@ -45,8 +45,8 @@ def logbook(sql_table: list, df: pandas.DataFrame, cursor: pyodbc.Cursor, name: 
     logbook(sql_table, df, cursor, 'logbook_name')
     """
     try: 
-        #this is done to get a form of id to make sure that the same logbooks are being used
-        #If there is no values in the table, then there shouldn't be an error occuring
+        # This is done to get a form of id to make sure that the same logbooks are being used
+        # If there is no values in the table, then there shouldn't be an error occuring
         sql_date_id = sql_table[0][12]
         df_date_id = df['Departure Time'][0]
     except:

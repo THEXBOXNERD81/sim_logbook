@@ -19,7 +19,7 @@ def test_logbook_matching_ids():
 
 
 def test_logbook_sql_larger():
-    #test that checks for an exception when the SQL table is larger than the dataframe
+    # Test that checks for an exception when the SQL table is larger than the dataframe
     sql_table = [(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, '2023-01-01'), (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, '2023-01-0')]
     df = pd.DataFrame({'Departure Time': ['2023-01-01']})
     cursor = MagicMock()
@@ -55,7 +55,7 @@ def test_logbook_empty_sql():
         pytest.fail(f"Unexpected exception {e}")
 
 def test_logbook_mismatched_ids():
-    #test that check that a ReferenceError is raised when ids mismatch
+    # Test that check that a ReferenceError is raised when ids mismatch
     sql_table = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, '2023-01-01']]
     df = pd.DataFrame({'Departure Time': ['2023-01-02'], 'Other Column': [1]})
     cursor = MagicMock()
