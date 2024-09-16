@@ -18,7 +18,9 @@ link to Little navmap: https://albar965.github.io/
 ## Installation
 Download the repository as a zip and unzip the repository.
 packages needed for this program are
+
 -pandas
+
 -pyocdb
 
 ## Usage
