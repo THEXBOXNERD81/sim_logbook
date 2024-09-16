@@ -12,3 +12,11 @@
 [2024-09-16 12:49:22][INFO] SQL table retrieved from logbook_leonardo
 [2024-09-16 12:49:22][INFO] csv files macth
 [2024-09-16 12:49:22][INFO] Nothing to update
+[2024-09-16 20:55:02][CRITICAL] The wanted file could not be loaded
+[2024-09-16 20:55:55][INFO] Requested file succesfully loaded
+[2024-09-16 20:55:55][INFO] Values converted to correct data types
+[2024-09-16 20:55:55][INFO] Connection to server was made
+[2024-09-16 20:55:55][INFO] There is already a table for leonardo in the database.
+[2024-09-16 20:55:55][INFO] SQL table retrieved from logbook_leonardo
+[2024-09-16 20:55:55][INFO] csv file and the SQL table macth
+[2024-09-16 20:55:55][INFO] Nothing to update

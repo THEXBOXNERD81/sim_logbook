@@ -16,7 +16,7 @@ logging.basicConfig(
 
 logger = logging.getLogger()
 
-file_name = 'csv/Test3.csv'
+file_name = 'csv_files/Test3.csv'
 name = 'leonardo'
 
 # Check that the csv file and sql table match so we can make sure that the logbooks are the same
