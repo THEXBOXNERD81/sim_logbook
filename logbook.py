@@ -16,9 +16,11 @@ logging.basicConfig(
 
 logger = logging.getLogger()
 
+file_name = 'csv/Test3.csv'
+name = 'leonardo'
 
 # Check that the csv file and sql table match so we can make sure that the logbooks are the same
-def logbook(sql_table: list, df: pandas.DataFrame, cursor: pyodbc.Cursor, name: str):
+def logbook(sql_table: list, df: pandas.DataFrame, cursor: pyodbc.Cursor, name: str, file_name: str) -> None:
     """
     Checks if the provided logbook matches the SQL table and updates the logbook with new entries.
 
@@ -82,7 +84,7 @@ def logbook(sql_table: list, df: pandas.DataFrame, cursor: pyodbc.Cursor, name: 
 
 # Load logbook csv and convert the datatypes to integrate into the SQL Database
 try:
-    df = csv.load_logbook('csv_files/Test3.csv')
+    df = csv.load_logbook(file_name)
     logger.info('Requested file succesfully loaded')
 except FileNotFoundError as e:
     logger.critical('The wanted file could not be loaded')
@@ -115,7 +117,7 @@ except pyodbc.InterfaceError as e:
     quit()
 
 # Make a new table for the user else just insert the csv data
-name = 'leonardo'
+
 
 try:
     # A New table should be created only if there isn't a table for the given name, then the already created logbook should be used
@@ -135,4 +137,4 @@ except pyodbc.ProgrammingError as e:
 
 
 
-logbook(sql_table, df, cursor, name)
+logbook(sql_table, df, cursor, name, file_name)
