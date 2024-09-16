@@ -1,8 +1,6 @@
 # Simulator Logbook
 
 ## Description
-A brief description of what your project does and why it exists.
-
 The Simulator Logbook takes your CSV file from Little Navmap and imports it into an SQL database, creating a new logbook table with a name of your choice. This project is designed to move the logbook from Little Navmap into a database for better storage and management.
  
 
