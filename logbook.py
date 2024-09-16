@@ -55,7 +55,7 @@ def logbook(sql_table: list, df: pandas.DataFrame, cursor: pyodbc.Cursor, name: 
     df_length = len(df)
     
     if sql_date_id == df_date_id:
-        logger.info('csv files macth')
+        logger.info('csv file and the SQL table macth')
         if len(sql_table) == len(df):
             logger.info('Nothing to update')
             return
