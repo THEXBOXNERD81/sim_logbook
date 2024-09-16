@@ -3,7 +3,8 @@
 ## Description
 A brief description of what your project does and why it exists.
 
-The simulator logbooks take your csv file from Little navmaps and puts into a sql database and creates a new logbook table with a name by choice. The project is made to move the logbook from little navmap into a database for storage. 
+The Simulator Logbook takes your CSV file from Little Navmap and imports it into an SQL database, creating a new logbook table with a name of your choice. This project is designed to move the logbook from Little Navmap into a database for better storage and management.
+ 
 
 link to Little navmap: https://albar965.github.io/
 
@@ -16,44 +17,44 @@ link to Little navmap: https://albar965.github.io/
 
 ## Installation
 Download the repository as a zip and unzip the repository.
+packages needed for this program are
+-pandas
+-pyocdb
 
 ## Usage
 
-To use the simulator logbook you need to fix some things.
-First you need to change the server connection into your sql database and make sure that it connects right to the database. This can be done in the sql_connection module in the modules map.
-Secondly in the logbook.py file, you need to change the location of the csv file into the correct directory and file name.
-Third you need to change the name into the name of your choice.
-Last run logbook.py
+To use the Simulator Logbook, follow these steps:
+1. Change the server connection in the `sql_connection` module to your SQL database. Ensure it connects correctly.
+2. In the `logbook.py` file, update the location of the CSV file to the correct directory and file name.
+3. Change the name to your desired logbook name.
+4. Run `logbook.py`.
 
-Example
-
-```    conn = pyodbc.connect(
-        'DRIVER={ODBC Driver 17 for SQL Server};'
-        'SERVER=DESKTOP-ONKVLR4;'
-        'DATABASE=logbook;'
-        'Trusted_Connection=yes;'
-    )
+Example:
+```python
+conn = pyodbc.connect(
+    'DRIVER={ODBC Driver 17 for SQL Server};'
+    'SERVER=YOUR_SERVER;'
+    'DATABASE=YOUR_DATABASE;'
+    'Trusted_Connection=yes;'
+)
 ```
-DRIVER, SERVER and DATABASE need to be changed to fit you sql-server and a database needs to be created.
+Update DRIVER, SERVER, and DATABASE to match your SQL server configuration.
 
-``` file_name = 'C:/right_dir/right_file.csv'
-name = 'Some_name'
+``` file_name = 'C:/your_directory/your_file.csv'
+name = 'Your_Logbook_Name'
 logbook(sql_table, df, cursor, name, file_name)
 ```
-The file_name and name should be changed too fit the function. The function accepts the arguments directly as values
-`logbook(sql_table, df, cursor, 'Some_name', 'C:/right_dir/right_file.csv')
+Ensure file_name and name are updated to fit your setup. The function accepts these arguments directly as values:
+`logbook(sql_table, df, cursor, 'Your_Logbook_Name', 'C:/your_directory/your_file.csv')
 
 the other function arguments should no be changed or left out.
 
-now run 
+Finally, run: 
 `python logbook.py
-to put the logbook into your sql table
+to import the logbook into your SQL table.
 
 ## Contributing
-No need for contributions please.
-
-## Contact
-Please do not contact me.
+Contributions does not need to be made since i wont be improving or updating the project.
 
 ## Acknowledgements
 Id like to thank Tishan Nehru for helping me look for typing errors.

@@ -1,7 +1,6 @@
 # venv Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
 # venv .venv\Scripts\activate
 
-import logging
 import pandas as pd
 
 # ladda in csv data
