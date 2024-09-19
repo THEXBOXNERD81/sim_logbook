@@ -16,7 +16,7 @@ link to Little navmap: https://albar965.github.io/
 ## Installation
 Download the repository as a zip and unzip the repository.
 Install the required packages:
-`pip install pandas pyodbc
+`pip install -r requirements.txt
 
 ## Usage
 
