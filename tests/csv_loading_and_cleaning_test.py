@@ -18,13 +18,13 @@ def test_load_non_existing_file():
     with pytest.raises(FileNotFoundError):
         csv.load_logbook('csv_files/does_not_exist_file.csv')
 
-def test_load_non_existing_file():
+def test_load_non_permission_file():
     # Test that checks for the PermissionError error when the function cant get acces to the file
     with pytest.raises(PermissionError):
         csv.load_logbook('C:/Windows/System32')
 
 def test_converting_dtypes(testing_df):
-    # Test that checks that data types where converted by checking that no esceptions where raised 
+    # Test that checks that data types where converted by checking that no exceptions where raised 
     try:
         csv.converting_dtypes(testing_df)
     except Exception as e:

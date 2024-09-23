@@ -118,7 +118,7 @@ def converting_dtypes(df: pd.DataFrame) -> pd.DataFrame:
         try:
             df[column] = df[column].astype(type)
         except ValueError as e:
-            raise f'{e}'
+            raise TypeError(f'{e}') 
 
     departure_and_destination = ['Departure Time', 'Departure Time Sim', 'Destination Time', 'Destination Time Sim']
 
